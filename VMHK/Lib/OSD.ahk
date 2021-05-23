@@ -5,6 +5,7 @@
 
     __New(pos:="", excludeFullscreen:=0, posEditorCallback:=""){
         this.excludeFullscreen:= excludeFullscreen
+        this.tt := true
         this.state:= 0
         ;get the primary monitor resolution
         SysGet, res, Monitor
@@ -35,7 +36,7 @@
     create(){
         Gui, New, +Hwndhwnd, OSD
         this.hwnd:= hwnd
-        Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption -Border
+        Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption -Border +Disabled
         Gui, Margin, 30
         Gui, Color, % this.theme, % OSD.ACCENT["-1"]
         Gui, Font,% Format("s{:i} w500 c{}", 12*this.scale, OSD.ACCENT["-1"]), Segoe UI
@@ -61,6 +62,9 @@
         if(!this.hwnd)
             this.create()
         Gui, % this.hwnd ":Default" ;set the default window
+        if (this.tt) {
+            TrayTip, %A_ScriptName%,% text , 1, 0x30|(2-accent)
+        }
         ;set the accent/theme colors
         if(color:=OSD.ACCENT[accent ""])
             accent:=color
@@ -101,7 +105,16 @@
         this.showdraggable("RClick to confirm")
         OnMessage(0x205, this.onRClickFunc)
     }
-
+    
+    __hideTrayTip(){
+        TrayTip
+        if SubStr(A_OSVersion,1,3) = "10." {
+            Menu Tray, NoIcon
+            Sleep 200  ; It may be necessary to adjust this sleep.
+            Menu Tray, Icon
+        }
+    }
+    
     ; hides the OSD window
     hide(){
         if(!this.hwnd)
@@ -110,6 +123,9 @@
         OnMessage(0x201, this.onDragFunc, 0)
         OnMessage(0x205, this.onRClickFunc, 0)
         Gui, Hide
+        if (this.tt) {
+            this.__hideTrayTip()
+        }
         this.state:= 0
     }
 
@@ -120,6 +136,10 @@
     setTheme(theme:=""){
         if(theme != this.theme)
             this.theme:= theme? (theme=1? "232323" : theme) : "f2f2f2"
+    }
+    
+    setTrayTip(active:=true){
+        this.tt:=active
     }
 
     processText(text){
