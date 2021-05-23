@@ -105,7 +105,7 @@
         this.showdraggable("RClick to confirm")
         OnMessage(0x205, this.onRClickFunc)
     }
-    
+
     __hideTrayTip(){
         TrayTip
         if SubStr(A_OSVersion,1,3) = "10." {
@@ -114,7 +114,7 @@
             Menu Tray, Icon
         }
     }
-    
+
     ; hides the OSD window
     hide(){
         if(!this.hwnd)
@@ -137,7 +137,7 @@
         if(theme != this.theme)
             this.theme:= theme? (theme=1? "232323" : theme) : "f2f2f2"
     }
-    
+
     setTrayTip(active:=true){
         this.tt:=active
     }
