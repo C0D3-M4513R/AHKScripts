@@ -19,6 +19,7 @@ Global vm,osd
 vm:= new VMR().login()
 osd:=new OSD()
 osd.setTheme(1)
+osd.setTrayTip(false)
 
 ;Sleep, 500 ; garuntee init? sometimes curious errors pop up.
 
