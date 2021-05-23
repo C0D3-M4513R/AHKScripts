@@ -3,7 +3,7 @@
     ,"0":"DC3545" ; OFF ACCENT
     ,"1":"007BFF"} ; ON ACCENT
 
-    __New(pos:="", excludeFullscreen:=0, posEditorCallback:=""){      
+    __New(pos:="", excludeFullscreen:=0, posEditorCallback:=""){
         this.excludeFullscreen:= excludeFullscreen
         this.state:= 0
         ;get the primary monitor resolution
@@ -19,7 +19,7 @@
         pos:= pos? pos : {x:-1,y:-1}
         ;get the final pos object
         this.pos:= this.getPosObj(pos.x, pos.y)
-        ;set up bound func objects 
+        ;set up bound func objects
         this.hideFunc:= objBindMethod(this, "hide")
         this.onDragFunc:= objBindMethod(this, "__onDrag")
         this.onRClickFunc:= objBindMethod(this, "__onRClick")
@@ -33,9 +33,9 @@
 
     ; creates the OSD window
     create(){
-        Gui, New, +Hwndhwnd, OSD 
+        Gui, New, +Hwndhwnd, OSD
         this.hwnd:= hwnd
-        Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption -Border 
+        Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption -Border
         Gui, Margin, 30
         Gui, Color, % this.theme, % OSD.ACCENT["-1"]
         Gui, Font,% Format("s{:i} w500 c{}", 12*this.scale, OSD.ACCENT["-1"]), Segoe UI
@@ -134,7 +134,7 @@
             return 0
         WinGet style, Style, ahk_id %WinID%
         WinGetPos ,,,winW,winH, %winTitle%
-        return !((style & 0x20800000) or WinActive("ahk_class Progman") 
+        return !((style & 0x20800000) or WinActive("ahk_class Progman")
             or WinActive("ahk_class WorkerW") or winH < A_ScreenHeight or winW < A_ScreenWidth)
     }
 
