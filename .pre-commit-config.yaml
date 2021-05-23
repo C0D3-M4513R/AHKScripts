@@ -1,0 +1,24 @@
+repos:
+    -   repo: https://github.com/pre-commit/pre-commit-hooks
+        rev: v3.4.0
+        hooks:
+            -   id: check-added-large-files
+            -   id: check-case-conflict
+            -   id: check-json
+            -   id: check-merge-conflict
+            -   id: check-symlinks
+            -   id: check-toml
+            -   id: check-vcs-permalinks
+            -   id: check-xml
+            -   id: check-yaml
+            -   id: destroyed-symlinks
+            -   id: detect-private-key
+            -   id: double-quote-string-fixer
+            -   id: end-of-file-fixer
+            -   id: mixed-line-ending
+                args: [ --fix=lf ]
+            #if you are a small dev, you prob. don't want to restrict your master? Why is that even `best-practice`?
+            #   - id: no-commit-to-branch
+            -   id: trailing-whitespace
+            #if you wish to use Markdown hard line breaks, use \
+            #See also: https://github.github.com/gfm/#hard-line-break
