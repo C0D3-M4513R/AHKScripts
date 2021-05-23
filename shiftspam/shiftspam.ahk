@@ -9,10 +9,10 @@ $F13::
     Toggle := !Toggle
     while Toggle
     {
-	Send {Shift Down}
-	Sleep 5
-	Send {Shift Up}	
-	;MouseClick Left
-	Sleep 15
+        Send {Shift Down}
+        Sleep 5
+        Send {Shift Up}
+        ;MouseClick Left
+        Sleep 15
     }
 return
