@@ -1,4 +1,4 @@
-Class OSD {
+﻿Class OSD {
     static ACCENT:= {"-1":"FF572D" ; MAIN ACCENT
     ,"0":"DC3545" ; OFF ACCENT
     ,"1":"007BFF"} ; ON ACCENT
@@ -13,7 +13,7 @@ Class OSD {
         ;get the primary monitor scaling
         this.scale:= A_ScreenDPI/96
         ;set the OSD width and height
-        this.width:= Format("{:i}", 220 * this.scale)
+        this.width:= Format("{:i}", 250 * this.scale)
         this.height:= Format("{:i}", 38 * this.scale)
         ;set the default pos object
         pos:= pos? pos : {x:-1,y:-1}
@@ -123,7 +123,7 @@ Class OSD {
     }
 
     processText(text){
-        if (StrLen(text)>20)
+        if (StrLen(text)>30)
             text:= SubStr(text, 1, 18) . Chr(0x2026) ; fix overflow with ellipsis
         return text
     }
