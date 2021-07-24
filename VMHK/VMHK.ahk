@@ -7,8 +7,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #HotkeyInterval 2000  ; This is the default value (milliseconds).
 #MaxHotkeysPerInterval 700
 ;This is for performance. See here for more details: https://www.autohotkey.com/docs/misc/Performance.htm
-;SetBatchLines -1
-;ListLines Off
+SetBatchLines -1
+ListLines Off
 
 #Persistent
 ;#InputLevel 100
@@ -88,7 +88,7 @@ incGain(channel,scaling:=true){
     }
     osd.showAndHide("Vol Up on Ch. " . channel,1,0.2)
 }
-decGain(channel,scalar:=1){
+decGain(channel,scaling:=true){
     if(scaling){
         updateGain(channel,-.05)
     }else{
@@ -96,7 +96,8 @@ decGain(channel,scalar:=1){
     }
     osd.showAndHide("Vol Down on Ch. " . channel,1,0.2)
 }
-updateGain(channel,amount){
+updateGain(channel,amount,clamping:=true){
+    OutputDebug, % "amount=" . amount
     OutputDebug, % "channel=" . channel
     db:=vm.bus[channel].gain ;get current db level
     OutputDebug, % "original db= " . db . "db"
@@ -106,6 +107,16 @@ updateGain(channel,amount){
     OutputDebug, % "altered lvl= " . lvl . "p"
     dbn:=levelToDB(lvl) ;calculate new db value
     OutputDebug, % "new altered lvl to db= " . dbn . "db"
+    OutputDebug, % "diff db dbn= " . db-dbn . "db"
+
+    if (clamping && amount>0 && db-dbn<-1){
+        OutputDebug, % "Clamped up db"
+        dbn:=db+1
+    }else if(clamping && amount<0 && db-dbn>1){
+        OutputDebug, % "Clamped down db"
+        dbn:=db-1
+    }
+
     vm.bus[channel].gain:=dbn ; actually set the new db val!
     return
 }
