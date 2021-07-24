@@ -116,7 +116,7 @@ updateGain(channel,amount,clamping:=true){
         OutputDebug, % "Clamped down db"
         dbn:=db-1
     }
-    
+
     vm.bus[channel].gain:=dbn ; actually set the new db val!
     return
 }
